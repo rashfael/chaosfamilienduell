@@ -1,0 +1,25 @@
+.container
+	.row
+		.col-md-12
+			form#create-question.form-inline.well
+				.row
+					.col-md-12
+						.input-group
+							input#question-wording.form-control(type="text", placeholder="What is the Question?")
+							span.input-group-btn
+								button.btn.btn-primary(type="submit") Create
+	.row
+		.col-md-6
+			h3 Questions
+			#questions
+		.col-md-6
+			h3 Answers
+			form#create-answer.form-inline.well
+				.row
+					.form-group.col-md-5
+						label.sr-only(for='answer-wording') Answer
+						input#answer-wording.form-control(type="text", placeholder="Answer")
+					.form-group.col-md-5
+						input#answer-number.form-control(type="text", placeholder="No of Ppl")
+					button.btn.btn-primary(type="submit") Add
+			#answers

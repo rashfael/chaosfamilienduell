@@ -1,0 +1,27 @@
+{
+  "author": "Your Name",
+  "name": "package-name",
+  "description": "Package description",
+  "version": "0.0.1",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "main": "bin/server.js",
+  "engines": {
+    "node": "0.10"
+  },
+  "dependencies": {
+    "coffee-script": "<=1.7",
+    "express": ">= 3.0",
+    "log4js": "~0.6.9",
+    "mongoose": ">=3.6.x",
+    "socket.io": "^0.9"
+  },
+  "devDependencies": {
+    "chai": "1.7.2",
+    "sinon": "1.7.3",
+    "sinon-chai": "2.4.0"
+  }
+}

@@ -1,0 +1,31 @@
+.container
+	h1 New Game
+	.row
+		.col-md-6.well
+			h2 Team 1
+			form#team-one.form-horizontal
+				.form-group
+					label.col-sm-2.control-label Name
+					.col-sm-10
+						input.name.form-control(type='text', placeholder="Name")
+				.form-group
+					label.col-sm-2.control-label Players
+					.col-sm-10
+						input.players.form-control(type='text', placeholder="Players")
+
+		.col-md-6.well
+			h2 Team 2
+			form#team-two.form-horizontal
+				.form-group
+					label.col-sm-2.control-label Name
+					.col-sm-10
+						input.name.form-control(type='text', placeholder="Name")
+				.form-group
+					label.col-sm-2.control-label Players
+					.col-sm-10
+						input.players.form-control(type='text', placeholder="Players")
+
+
+	.row
+		button.btn.btn-primary.btn-block Create Game
+
