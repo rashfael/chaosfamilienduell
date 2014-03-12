@@ -14,8 +14,8 @@ module.exports = class NewGameView extends View
 		@trigger 'new-game', 
 			team1:
 				name: @$('#team-one .name').val()
-				players: @$('#team-one .players').val()
+				members: @$('#team-one .members').val()
 			team2:
 				name: @$('#team-two .name').val()
-				players: @$('#team-two .players').val()
+				members: @$('#team-two .members').val()
 		return

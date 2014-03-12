@@ -1,7 +1,25 @@
-h1 AdminInnenBereich
+.row
+	.col-md-10.col-md-offset-1
+		a.btn.btn-block.btn-primary(href='/admin/new-game') Create New Game
+hr
+if !locals._id
+	h5 No running game
+else
+	#teams
+		.row
+			.col-md-5.team-one
+				h3= team1.name
+				
+			.col-md-2
+				h1 vs
+			.col-md-5.team-two
+				h3= team2.name
 
-if game
-	h2 running game
-	h3= game._id
-
-a.btn.btn-primary(href='/admin/new-game') Create New Game
+	.row
+		.col-md-2#team-one
+		.col-md-8
+			a#new-round.btn.btn-block.btn-danger(href='#') Start New Round
+			#question
+				h1
+			#answers
+		.col-md-2#team-two

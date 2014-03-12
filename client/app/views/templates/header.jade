@@ -1,22 +1,23 @@
-.navbar-header
-	a.navbar-brand(href="#") Brunch Webapp
-.collapse.navbar-collapse
-	ul.nav.navbar-nav
-		//- .btn-group.pull-right
-		//- 	a.btn.dropdown-toggle(data-toggle="dropdown",href="#")
-		//- 		i.icon-user
-		//- 		|  Username
-		//- 		span.caret
-		//- 	ul.dropdown-menu
-		//- 		li: a(href="#") Profile
-		//- 		li.divider
-		//- 		li: a(href="#") Sign Out
-		//- for item in items
-		//- 	li: a(href=item.href)= item.title
-		li
-			a#admin-dropdown.dropdown-toggle(data-toggle='dropdown', role='button', href='#')
-				| Admin
-				b.caret
-			ul.dropdown-menu(aria-labelledby='admin-dropdown', role='menu')
-				li: a(href='/admin/questions') Questions
+.container
+	.navbar-header
+		a.navbar-brand(href="#") Brunch Webapp
+	.collapse.navbar-collapse
+		ul.nav.navbar-nav
+			//- .btn-group.pull-right
+			//- 	a.btn.dropdown-toggle(data-toggle="dropdown",href="#")
+			//- 		i.icon-user
+			//- 		|  Username
+			//- 		span.caret
+			//- 	ul.dropdown-menu
+			//- 		li: a(href="#") Profile
+			//- 		li.divider
+			//- 		li: a(href="#") Sign Out
+			//- for item in items
+			//- 	li: a(href=item.href)= item.title
+			li
+				a#admin-dropdown.dropdown-toggle(data-toggle='dropdown', role='button', href='#')
+					| Admin
+					b.caret
+				ul.dropdown-menu(aria-labelledby='admin-dropdown', role='menu')
+					li: a(href='/admin/questions') Questions
 
