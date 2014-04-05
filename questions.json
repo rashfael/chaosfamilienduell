@@ -1,0 +1,36 @@
+[ {
+	"question": "QUESTION1",
+	"answers": [
+	{"answer": "ONE", "numberOfPeople": 10},
+	{"answer": "TWO", "numberOfPeople": 8},
+	{"answer": "THREE", "numberOfPeople": 6}
+	]},
+	{
+	"question": "QUESTION2",
+	"answers": [
+	{"answer": "ONE", "numberOfPeople": 10},
+	{"answer": "TWO", "numberOfPeople": 8},
+	{"answer": "THREE", "numberOfPeople": 6}
+	]},
+	{
+	"question": "QUESTION3",
+	"answers": [
+	{"answer": "ONE", "numberOfPeople": 10},
+	{"answer": "TWO", "numberOfPeople": 8},
+	{"answer": "THREE", "numberOfPeople": 6}
+	]},
+	{
+	"question": "QUESTION4",
+	"answers": [
+	{"answer": "ONE", "numberOfPeople": 10},
+	{"answer": "TWO", "numberOfPeople": 8},
+	{"answer": "THREE", "numberOfPeople": 6}
+	]},
+	{
+	"question": "QUESTION5",
+	"answers": [
+	{"answer": "ONE", "numberOfPeople": 10},
+	{"answer": "TWO", "numberOfPeople": 8},
+	{"answer": "THREE", "numberOfPeople": 6}
+	]}
+]
