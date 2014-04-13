@@ -6,6 +6,6 @@ module.exports.Game = class Game extends Model
 	urlRoot: 'game'
 	idAttribute: '_id'
 
-module.exports.Games= class Games extends Collection
+module.exports.Games = class Games extends Collection
 	model: Game
 	url: 'game'

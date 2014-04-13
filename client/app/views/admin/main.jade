@@ -1,25 +1,31 @@
-.row
-	.col-md-10.col-md-offset-1
-		a.btn.btn-block.btn-primary(href='/admin/new-game') Create New Game
-hr
-if !locals._id
-	h5 No running game
-else
-	#teams
-		.row
-			.col-md-5.team-one
-				h3= team1.name
-				
-			.col-md-2
-				h1 vs
-			.col-md-5.team-two
-				h3= team2.name
-
+.container-fluid
 	.row
-		.col-md-2#team-one
-		.col-md-8
-			a#new-round.btn.btn-block.btn-danger(href='#') Start New Round
-			#question
-				h1
-			#answers
-		.col-md-2#team-two
+		.col-md-10.col-md-offset-1
+			a.btn.btn-block.btn-primary(href='/admin/new-game') Create New Game
+	hr
+	if !locals.game
+		h5 No running game
+	else
+		#teams
+			.row
+				.col-md-5.team-one
+					h3= game.team1.name
+					
+				.col-md-2
+					h1 vs
+				.col-md-5.team-two
+					h3= game.team2.name
+
+		.row
+			.col-md-2#team-one
+			.col-md-8
+				a#new-round.btn.btn-block.btn-danger(href='#') Start New Round
+				#question
+					h1
+				#answers
+				
+				#strikes
+					span.strike.glyphicon.glyphicon-remove
+					span.strike.glyphicon.glyphicon-remove
+					span.strike.glyphicon.glyphicon-remove
+			.col-md-2#team-two

@@ -1,5 +1,7 @@
 View = require 'views/base/view'
 CollectionView = require 'views/base/collection_view'
+{Question, Questions, Answer, Answers} = require 'models/question'
+
 
 module.exports.AdminMainView = class AdminMainView extends View
 	autoRender: true
@@ -15,6 +17,7 @@ module.exports.AdminMainView = class AdminMainView extends View
 
 	listen:
 		'change:round model': 'displayNewRound'
+		'change:strikes model': 'displayStrikes'
 
 	requestNewRound: (event) =>
 		event.preventDefault()
@@ -26,6 +29,17 @@ module.exports.AdminMainView = class AdminMainView extends View
 		@subview 'answers', new AnswersView
 			region: 'answers'
 			collection: round.get 'answers'
+
+	displayStrikes: (state, strikes) =>
+		if strikes is 0
+			@$('.strike').removeClass 'on'
+			return
+		for i in [1..strikes]
+			@$(".strike:nth-child(#{i})").addClass 'on'
+		if strikes < 3
+			for i in [(strikes+1)..3] 
+				@$(".strike:nth-child(#{i})").removeClass 'on'
+
 
 module.exports.AdminGameView = class AdminGameView extends View
 	autoRender: true
@@ -81,25 +95,32 @@ class AnswerItemView extends View
 	template: require 'views/admin/answer-item'
 	tagName: 'tr'
 
-	# events:
-	# 	'click': 'click'
+	events:
+		'click': 'click'
 
-	# listen:
-	# 	'change:active model': 'active'
+	listen:
+		'change:answered model': 'answered'
 
-	# click: =>
-	# 	@publishEvent 'select-member', @model
+	click: =>
+		@publishEvent 'select-answer', @model
 
-	# active: (member, active) =>
-	# 	if active
-	# 		@$el.addClass 'active'
-	# 	else
-	# 		@$el.removeClass 'active'
+	answered: (answer, answered) =>
+		if answered
+			@$el.addClass 'answered'
+		else
+			@$el.removeClass 'answered'
 
 module.exports.AnswersView = class AnswersView extends CollectionView
 	autoRender: true
-	tagName: 'table'
-	className: 'table'
 	template: require 'views/admin/answers-collection'
 	itemView: AnswerItemView
 	listSelector: 'tbody'
+
+	events:
+		'click #wrongAnswer': 'wrongAnswer'
+
+	wrongAnswer: (event) =>
+		event.preventDefault()
+		@publishEvent 'select-answer', new Answer
+			answer: '_wrong'
+			numberOfPeople: 0
