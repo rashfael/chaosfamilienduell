@@ -10,6 +10,8 @@ module.exports.AdminMainView = class AdminMainView extends View
 		game: '#game'
 		team1: '#team-one'
 		team2: '#team-two'
+		'team1-members': '#team-one-members'
+		'team2-members': '#team-two-members'
 		answers: '#answers'
 
 	events:
@@ -18,6 +20,7 @@ module.exports.AdminMainView = class AdminMainView extends View
 	listen:
 		'change:round model': 'displayNewRound'
 		'change:strikes model': 'displayStrikes'
+		'change:phase model': 'phaseChanged'
 
 	requestNewRound: (event) =>
 		event.preventDefault()
@@ -40,10 +43,25 @@ module.exports.AdminMainView = class AdminMainView extends View
 			for i in [(strikes+1)..3] 
 				@$(".strike:nth-child(#{i})").removeClass 'on'
 
+	phaseChanged: (state, phase) =>
+		@$('#phase').text phase
+		# if phase is 'round-won'
+		# 	@$('')
+
 
 module.exports.AdminGameView = class AdminGameView extends View
 	autoRender: true
 	template: require 'views/admin/game'
+
+
+module.exports.TeamView = class TeamView extends View
+	autoRender: true
+	template: require 'views/admin/team'
+	listen:
+		'change:points model': 'pointsChanged'
+		
+	pointsChanged: (team, points) =>
+		@$('#points').text points
 
 class MemberItemView extends View
 	template: require 'views/admin/member-item'
@@ -53,16 +71,19 @@ class MemberItemView extends View
 		'click': 'click'
 
 	listen:
-		'change:active model': 'active'
+		'change:active model': 'activeChanged'
 
 	click: =>
 		@publishEvent 'select-member', @model
 
-	active: (member, active) =>
+	activeChanged: (member, active) =>
 		if active
 			@$el.addClass 'active'
 		else
 			@$el.removeClass 'active'
+
+
+
 
 module.exports.MembersView = class MembersView extends CollectionView
 	autoRender: true

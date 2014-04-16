@@ -8,16 +8,12 @@
 	else
 		#teams
 			.row
-				.col-md-5.team-one
-					h3= game.team1.name
-					
+				#team-one.col-md-5.team-one
 				.col-md-2
 					h1 vs
-				.col-md-5.team-two
-					h3= game.team2.name
-
+				#team-two.col-md-5.team-two
 		.row
-			.col-md-2#team-one
+			#team-one-members.col-md-2.team-one
 			.col-md-8
 				a#new-round.btn.btn-block.btn-danger(href='#') Start New Round
 				#question
@@ -28,4 +24,4 @@
 					span.strike.glyphicon.glyphicon-remove
 					span.strike.glyphicon.glyphicon-remove
 					span.strike.glyphicon.glyphicon-remove
-			.col-md-2#team-two
+			#team-two-members.col-md-2.team-two

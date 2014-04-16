@@ -6,6 +6,7 @@ module.exports = class State extends Model
 	#		new-round
 	#		face-off
 	#		team
+	#		round-won
 
 	# round
 

@@ -8,7 +8,7 @@ State = require 'models/state'
 {Team, Member, Members} = require 'models/team'
 {Question, Questions, Answer, Answers} = require 'models/question'
 {QuestionsMainView, QuestionsView, AnswersView} = require 'views/admin/question_views'
-{AdminMainView, AdminGameView, MembersView} = require 'views/admin/main-views'
+{AdminMainView, AdminGameView, TeamView, MembersView} = require 'views/admin/main-views'
 NewGameView = require 'views/admin/new-game-view'
 
 
@@ -53,9 +53,11 @@ module.exports = class AdminController extends Controller
 				@game.set 'team1', new Team
 					name: game.teams[0].name
 					members: new Members()
+					points: 0
 				@game.set 'team2', new Team
 					name: game.teams[1].name
 					members: new Members()
+					points: 0
 				
 
 				team1 = @game.get 'team1'
@@ -75,7 +77,7 @@ module.exports = class AdminController extends Controller
 					else
 						team1.unset 'turn'
 
-				switchTeams = ->
+				switchTeams = =>
 					if @state.get('team') is team1
 						@state.set 'team', team2
 					else
@@ -112,12 +114,15 @@ module.exports = class AdminController extends Controller
 
 				for team in ['team1', 'team2']
 					do (team) =>
-						@view.subview team, new MembersView
+						@view.subview team, new TeamView
 							region: team
+							model: @game.get(team)
+						@view.subview team+'-members', new MembersView
+							region: team+'-members'
 							model: @game.get(team)
 							collection: @game.get(team).get 'members'
 
-						@listenTo @view.subview(team), 'fake-buzz', =>
+						@listenTo @view.subview(team+'-members'), 'fake-buzz', =>
 							@publishEvent '!io:emit', '!game:perform-action',
 								action: 'buzz'
 								team: @game.get(team).get 'name'
@@ -150,6 +155,9 @@ module.exports = class AdminController extends Controller
 								question: action.question
 								answers: new Answers action.question.answers
 							@state.set 'strikes', 0
+							team1.unset 'turn'
+							team2.unset 'turn'
+						
 						when 'activate-member'
 							members[action.member].set 'active', true
 							# TODO: check that both teams have an active member
@@ -180,34 +188,41 @@ module.exports = class AdminController extends Controller
 										unanswered--
 										highestAnswered = nop if nop > highestAnswered
 
+							console.log 'phase', @state.get 'phase'
 							switch @state.get 'phase'
 
 								# answering while FACE OFF
 								when 'face-off'
+									console.log 'this is a face off!'
 									calculateState()
 
 									# if action.answer is 'wrong'
 									# 		numAnswered++
 
-									if actionAnswer.get('numberOfPeople') is topNop or (@state.set('answerCount') > 1 and actionAnswer.get('numberOfPeople') is highestAnswered)
+									if actionAnswer? and (actionAnswer.get('numberOfPeople') is topNop or (@state.get('answerCount') > 1 and actionAnswer.get('numberOfPeople') is highestAnswered))
 										console.log 'answered! Team phase now!'
 										@state.set 'phase', 'team'
 									else
 										console.log 'answer not good enough, switch teams'
 										switchTeams()
 										# autophase the previous team
-										if highestAnswered isnt 0
+										if highestAnswered isnt 0 and (@state.get('answerCount') > 1 or not actionAnswer?)
+											console.log 'previous team was better'
 											@state.set 'phase', 'team'
 
 								#answering when team
 								when 'team'
 									calculateState()
+									if unanswered <= 0
+										# WIN ROUND
+										@state.set 'phase', 'round-won'
 									if action.answer is '_wrong'
 										strikes = @state.get('strikes') + 1
 										@state.set 'strikes', strikes
 										if strikes >= 3
-											# THINGS
 											console.log 'team lost'
+											switchTeams()
+											@state.set 'strikes', 0
 
 
 	newGame: ->
