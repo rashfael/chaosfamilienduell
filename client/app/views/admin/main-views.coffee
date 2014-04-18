@@ -7,24 +7,31 @@ module.exports.AdminMainView = class AdminMainView extends View
 	autoRender: true
 	template: require 'views/admin/main'
 	regions:
-		game: '#game'
 		team1: '#team-one'
 		team2: '#team-two'
-		'team1-members': '#team-one-members'
-		'team2-members': '#team-two-members'
 		answers: '#answers'
 
 	events:
+		'click #new-game': 'requestNewGame'
 		'click #new-round': 'requestNewRound'
+		'click #face-off': 'requestFaceOff'
 
 	listen:
 		'change:round model': 'displayNewRound'
 		'change:strikes model': 'displayStrikes'
 		'change:phase model': 'phaseChanged'
 
+	requestNewGame: (event) =>
+		event.preventDefault()
+		@trigger 'new-game'
+
 	requestNewRound: (event) =>
 		event.preventDefault()
 		@trigger 'new-round'
+
+	requestFaceOff: (event) =>
+		event.preventDefault()
+		@trigger 'face-off'
 
 	displayNewRound: (game, round) =>
 		@$('#question h1').text round.get('question').question
@@ -57,11 +64,32 @@ module.exports.AdminGameView = class AdminGameView extends View
 module.exports.TeamView = class TeamView extends View
 	autoRender: true
 	template: require 'views/admin/team'
+
+	events:
+		'submit form': 'changeName'
+		'click .fake-buzz': 'fakeBuzz'
+
 	listen:
-		'change:points model': 'pointsChanged'
+		'change:name model': 'nameChanged'	
+		'change:points model': 'pointsChanged'	
+
+	# listen:
+	# 	'change:turn model': 'turn'
+
+	fakeBuzz: (event) ->
+		event.preventDefault()
+		@trigger 'fake-buzz'
+
+	changeName: (event) =>
+		event.preventDefault()
+		@trigger 'changeName', @$('.name-field').val()
+
+	nameChanged: (team, name) =>
+		@$('.name').text name
 		
 	pointsChanged: (team, points) =>
-		@$('#points').text points
+		console.log points
+		@$('.points').text points
 
 class MemberItemView extends View
 	template: require 'views/admin/member-item'
@@ -139,9 +167,14 @@ module.exports.AnswersView = class AnswersView extends CollectionView
 
 	events:
 		'click #wrongAnswer': 'wrongAnswer'
+		'click #switchTeam': 'switchTeam'
 
 	wrongAnswer: (event) =>
 		event.preventDefault()
 		@publishEvent 'select-answer', new Answer
 			answer: '_wrong'
 			numberOfPeople: 0
+
+	switchTeam: (event) =>
+		event.preventDefault()
+		@publishEvent 'switch-team'

@@ -1,0 +1,22 @@
+.row#title
+	.col-md-12
+		h1 CHAOS
+			br
+			| FAMILIEN
+			br
+			| DUELL
+
+#question
+	h1
+#answers
+#strikes
+	span.strike.glyphicon.glyphicon-remove
+	span.strike.glyphicon.glyphicon-remove
+	span.strike.glyphicon.glyphicon-remove
+.background
+	if !locals.game
+		h5 No running game
+	else
+		#teams
+			#team-one.team-one
+			#team-two.team-two

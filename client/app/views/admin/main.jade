@@ -1,7 +1,7 @@
 .container-fluid
 	.row
 		.col-md-10.col-md-offset-1
-			a.btn.btn-block.btn-primary(href='/admin/new-game') Create New Game
+			button#new-game.btn.btn-block.btn-primary Create New Game (kills the old one)
 	hr
 	if !locals.game
 		h5 No running game
@@ -16,6 +16,7 @@
 			#team-one-members.col-md-2.team-one
 			.col-md-8
 				a#new-round.btn.btn-block.btn-danger(href='#') Start New Round
+				a#face-off.btn.btn-block.btn-danger(href='#') Start Face Off
 				#question
 					h1
 				#answers
