@@ -16,6 +16,16 @@ module.exports = class AdminController extends Controller
 			@redirectTo 'spectate#index', {}, 
 				forceStartup: true
 		@publishEvent '!io:emit', '!game:get-running', (err, game) =>
+			$(document).keydown (event) =>
+				if event.which is 70
+					@publishEvent '!io:emit', '!game:perform-action',
+						action: 'buzz'
+						team: 1
+				if event.which is 74
+					@publishEvent '!io:emit', '!game:perform-action',
+						action: 'buzz'
+						team: 2			
+
 			if not game?
 				@view = new MainView
 			else

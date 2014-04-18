@@ -14,21 +14,27 @@
 	"answers": [
 	{"answer": "ONE", "numberOfPeople": 10},
 	{"answer": "TWO", "numberOfPeople": 8},
-	{"answer": "THREE", "numberOfPeople": 6}
+	{"answer": "THREE", "numberOfPeople": 6},
+	{"answer": "FOUR", "numberOfPeople": 5},
+	{"answer": "FIVE", "numberOfPeople": 4},
+	{"answer": "SIX", "numberOfPeople": 3}
 	]},
 	{
 	"question": "QUESTION3",
 	"answers": [
 	{"answer": "ONE", "numberOfPeople": 10},
 	{"answer": "TWO", "numberOfPeople": 8},
-	{"answer": "THREE", "numberOfPeople": 6}
+	{"answer": "THREE", "numberOfPeople": 6},
+	{"answer": "FOUR", "numberOfPeople": 5},
+	{"answer": "FIVE", "numberOfPeople": 4}
 	]},
 	{
 	"question": "QUESTION4",
 	"answers": [
 	{"answer": "ONE", "numberOfPeople": 10},
 	{"answer": "TWO", "numberOfPeople": 8},
-	{"answer": "THREE", "numberOfPeople": 6}
+	{"answer": "THREE", "numberOfPeople": 6},
+	{"answer": "FOUR", "numberOfPeople": 5}
 	]},
 	{
 	"question": "QUESTION5",

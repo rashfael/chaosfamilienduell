@@ -60,6 +60,7 @@ module.exports = class GameController
 
 		mediator.on '!game:new-round', =>
 			question = drawQuestion()
+			@state.round++
 
 
 	drawQuestion: =>
@@ -71,9 +72,11 @@ module.exports = class GameController
 			{answers: 3, multiplier: 3}
 		]
 		# get one question with the correct amount of answers
+		loopCount = 0
 		while true
 			i = Math.floor(Math.random() * @questions.length)
-			break if @questions[i].answers.length is roundTable[@state.round]
+			loopCount++
+			break if @questions[i].answers.length is roundTable[@state.round].answers or loopCount > 1000
 		[question] = @questions.splice i, 1
 		console.log @questions.length
 		if @questions.length is 0
