@@ -10,35 +10,50 @@
 //*
 //  box-sizing: border-box
 
+@font-face
+	font-family 'VT323'
+	src url('/fonts/VT323.woff') format('woff')
+	font-weight normal
+	font-style normal
 
+@font-face
+	font-family 'commodore'
+	src url('/fonts/commodore.woff') format('woff'), url('/fonts/commodore.ttf') format('truetype')
 
-.form-inline .form-control
-	width 100%
+team1-color = #C20
+team2-color = #39B
+team1-color-highlight = #C20
+team2-color-highlight = #3364BB
 
-#new-game .well
-	text-align center
+.admin
 
-#teams
-	text-align center
+	.form-inline .form-control
+		width 100%
 
-.team-one
-	background-color rgba(255, 104, 21, 0.9)
+	#new-game .well
+		text-align center
 
-	&.turn
-		background-color rgba(255, 104, 21, 1.0)
+	#teams
+		text-align center
 
-.team-two
-	background-color rgba(0, 178, 173, 0.9)
+	.team-one
+		background-color team1-color
 
-	&.turn
-		background-color #0F6
+		&.turn
+			background-color team1-color-highlight
 
-#question
-	text-align center
+	.team-two
+		background-color team2-color
 
-#answers
-	.answered
-		background-color #F00
+		&.turn
+			background-color team2-color-highlight
+
+	#question
+		text-align center
+
+	#answers
+		.answered
+			background-color #F00
 
 #strikes
 	text-align center

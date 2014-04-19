@@ -1,5 +1,5 @@
 [ {
-	"question": "QUESTION1",
+	"question": "Welches ist die teuerste Datenübertragungsform, die du jemals benutzt hast?",
 	"answers": [
 	{"answer": "ONE", "numberOfPeople": 10},
 	{"answer": "TWO", "numberOfPeople": 8},
@@ -10,7 +10,7 @@
 	{"answer": "SEVEN", "numberOfPeople": 2}
 	]},
 	{
-	"question": "QUESTION2",
+	"question": "Welches ist das kleinste Speichermedium was du jemals benutzt hattest?",
 	"answers": [
 	{"answer": "ONE", "numberOfPeople": 10},
 	{"answer": "TWO", "numberOfPeople": 8},
@@ -20,7 +20,7 @@
 	{"answer": "SIX", "numberOfPeople": 3}
 	]},
 	{
-	"question": "QUESTION3",
+	"question": "Nenne einen Podcast.",
 	"answers": [
 	{"answer": "ONE", "numberOfPeople": 10},
 	{"answer": "TWO", "numberOfPeople": 8},
@@ -29,7 +29,7 @@
 	{"answer": "FIVE", "numberOfPeople": 4}
 	]},
 	{
-	"question": "QUESTION4",
+	"question": "Von welchem Hersteller ist dein Notebook?",
 	"answers": [
 	{"answer": "ONE", "numberOfPeople": 10},
 	{"answer": "TWO", "numberOfPeople": 8},

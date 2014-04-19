@@ -1,6 +1,15 @@
-.container-fluid
+audio#sound-intro(preload='auto')
+	source(type="audio/ogg", src="/sounds/intro.ogg", loop=true)
+audio#sound-round(preload='auto')
+	source(type="audio/ogg", src="/sounds/runde.ogg", loop=true)
+audio#sound-reveal(preload='auto')
+	source(type="audio/ogg", src="/sounds/reveal.ogg", loop=true)
+audio#sound-wrong(preload='auto')
+	source(type="audio/ogg", src="/sounds/wrong.ogg", loop=true)
+.container-fluid.admin
 	.row
 		.col-md-10.col-md-offset-1
+			a#play-intro.btn.btn-block.btn-danger(href='#') Play Intro
 			button#new-game.btn.btn-block.btn-primary Create New Game (kills the old one)
 	hr
 	if !locals.game

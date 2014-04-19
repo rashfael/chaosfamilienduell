@@ -39,7 +39,7 @@ module.exports.MainView = class AdminMainView extends View
 
 	phaseChanged: (state, phase) =>
 		# unset ALL
-		@$el.removeClass 'phase-face-off phase-team phase-new-round'
+		@$el.removeClass 'phase-face-off phase-team phase-new-round phase-team-steal phase-round-won'
 		@$el.addClass 'phase-' + phase
 		# if phase is 'round-won'
 		# 	@$('')
@@ -54,7 +54,7 @@ module.exports.TeamView = class TeamView extends View
 
 	render: =>
 		super
-		@$el.hide()
+		# @$el.hide()
 
 	attach: =>
 		super
@@ -62,7 +62,7 @@ module.exports.TeamView = class TeamView extends View
 
 	nameChanged: (team, name) =>
 		@$('.name').text name	
-		@$el.show()
+		# @$el.show()
 
 	turnChanged: (team, turn) =>
 		if turn
@@ -76,15 +76,49 @@ module.exports.TeamView = class TeamView extends View
 		@$('.points').text points
 
 class AnswerItemView extends View
+
 	template: require 'views/spectate/answer-item'
 	tagName: 'tr'
 
 	listen:
 		'change:answered model': 'answered'
 
+	initialize: ->
+		super
+		@text = 'XXXXXXXXXXXXXXXXXXXXXX'
+
 	answered: (answer, answered) =>
+		answerText = @model.get 'answer'
 		if answered
 			@$el.addClass 'answered'
+			char = 0
+			interval = setInterval =>
+				if char <= 21
+					if char < answerText.length
+						@$('.text').html answerText[0..char] + @text[char+1..21]
+					else
+						spaces = ''
+						spaces += '&nbsp;' for i in [answerText.length..char]
+						@$('.text').html answerText + spaces + @text[char+1..21]
+					char++
+				else
+					clearInterval interval
+					numText = ''+@model.get('numberOfPeople')
+					num = 0
+					
+					numInterval = setInterval =>
+						if num <= 1
+							if num is 0
+								@$('.numberOfPeople').html 'X' + numText[0]
+							else
+									@$('.numberOfPeople').html numText
+						else
+							clearInterval numInterval
+						num++
+					, 100
+					
+
+			, 75
 		else
 			@$el.removeClass 'answered'
 

@@ -1,27 +1,41 @@
 @import 'nib'
 
+team1-color = #F12B03
+team2-color = #39B
+team1-color-highlight = #910
+team2-color-highlight = #3364BB
+
 #spectate
+	font-family 'commodore'
+	color rgba(255,255,255,0.9)
 	#question
 		position absolute
 		width 100%
-		font-size 5em
+		font-size 2em
 		top 1%
+		text-align center
 
 		h1
+			padding 20px 50px 0
 			margin 0
+			line-height 0.8em
 
 	#answers
 		
 		position absolute
 		width 60%
 		left 20%
-		top 4em
+		top 4.5em
 		font-size 3em
 		tr
-			display none
+			
+			td
+				// visibility hidden
+				padding 0
+				border-top none
 
-			&.answered
-				display table-row
+			// &.answered td
+			// 	visibility inherit
 
 		.table-striped > tbody > tr:nth-child(odd) > td
 			background-color rgba(255,255,255,0.5)
@@ -33,12 +47,19 @@
 	#strikes
 		position absolute
 		width 100%
-		bottom 5%
+		bottom 2%
+		
+
+		.strike
+			font-size 12em
+			line-height 1em
+			&.on
+				color #F00
 
 	#question, #answers, #strikes
 		display none
 
-	&.phase-face-off, &.phase-team, &.phase-round-won
+	&.phase-face-off, &.phase-team, &.phase-team-steal, &.phase-round-won
 		#question, #answers, #strikes
 			display block
 
@@ -58,59 +79,108 @@
 		width 100%
 		overflow hidden
 	#teams
+		.points
+			font-size 5em
+			line-height 0
 		height 100%
 		.row
-			height 100%
-		.team-one, .team-two
-			position absolute
-			width 50%
-			height 100%
+			height 100%			
 		.team-one
-			bottom 0
-			left 0
-			div
+			.bg
+				position absolute
+				background-color team1-color
+				z-index 100
+				width 200%
+				height 200%
+				bottom 0
+				left -50%
+				-webkit-transform rotate(-90deg)
+				-webkit-transform-origin 50% 100%
+			.info
+				z-index 1001
 				position absolute
 				bottom 2em
 				left 2em
 
+			&.turn
+				.bg
+					background-color team1-color-highlight
+
+
 		.team-two
-			bottom 0
-			right 0
-			div
+			.bg
+				position absolute
+				background-color team2-color
+				width 100%
+				height 100%
+				bottom 0
+				right 0
+			.info
+				text-align right
+				z-index 1001
 				position absolute
 				bottom 2em
 				right 2em
 
+			&.turn
+				.bg
+					background-color team2-color-highlight
+
 	&.phase-team, &.phase-round-won
 		#teams
-			.team-one, .team-two
+			.team-one
 				&.turn
-					z-index 50
-					animation-duration 3s
-					animation-name gotTurn
-					width 100%
+					.bg
+						-webkit-transform rotate(-20deg)
+						animation-duration 3s
+						animation-name gotTurn
 
 				&.noTurn
-					z-index 1000
-					animation-duration 3s
-					animation-name lostTurn
-					height 20%
-					width 50%
-		// 	display none
+					.bg
+						-webkit-transform rotate(-160deg)
+						animation-duration 3s
+						animation-name lostTurn
 
-		// .team-two
-		// 	display none
+	&.phase-team-steal
+		#teams
+			.team-one
+				&.turn
+					.bg
+						-webkit-transform rotate(-20deg)
+						animation-duration 3s
+						animation-name stoleTurn
+
+				&.noTurn
+					.bg
+						-webkit-transform rotate(-160deg)
+						animation-duration 3s
+						animation-name turnStolen
+
+	// 	display none
+
+	// .team-two
+	// 	display none
 
 @keyframes gotTurn
 	from
-		width 50%
+		-webkit-transform rotate(-90deg)
 	to
-		width 100%
+		-webkit-transform rotate(-20deg)
 
 @keyframes lostTurn
 	from
-		width 50%
-		height 100%
+		-webkit-transform rotate(-90deg)
 	to
-		height 20%
-		width 50%
+		-webkit-transform rotate(-160deg)
+
+@keyframes stoleTurn
+	from
+		-webkit-transform rotate(-160deg)
+	to
+		-webkit-transform rotate(-20deg)
+
+@keyframes turnStolen
+	from
+		-webkit-transform rotate(-20deg)
+	to
+		-webkit-transform rotate(-160deg)

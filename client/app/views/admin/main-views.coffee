@@ -15,6 +15,7 @@ module.exports.AdminMainView = class AdminMainView extends View
 		'click #new-game': 'requestNewGame'
 		'click #new-round': 'requestNewRound'
 		'click #face-off': 'requestFaceOff'
+		'click #play-intro': 'startIntro'
 
 	listen:
 		'change:round model': 'displayNewRound'
@@ -44,6 +45,7 @@ module.exports.AdminMainView = class AdminMainView extends View
 		if strikes is 0
 			@$('.strike').removeClass 'on'
 			return
+		$('#sound-wrong')[0].play()
 		for i in [1..strikes]
 			@$(".strike:nth-child(#{i})").addClass 'on'
 		if strikes < 3
@@ -52,9 +54,17 @@ module.exports.AdminMainView = class AdminMainView extends View
 
 	phaseChanged: (state, phase) =>
 		@$('#phase').text phase
-		# if phase is 'round-won'
-		# 	@$('')
+		# play sounds
+		# if phase is 'new-round'
+		# 	@$('#sound-round')[0].play()
 
+	startIntro: (event) =>
+		event.preventDefault()
+		@$('#sound-intro')[0].play()
+
+	stopIntro: () =>
+		@$('#sound-intro')[0].pause()
+		@$('#sound-intro')[0].currentTime = 0
 
 module.exports.AdminGameView = class AdminGameView extends View
 	autoRender: true
@@ -156,6 +166,7 @@ class AnswerItemView extends View
 	answered: (answer, answered) =>
 		if answered
 			@$el.addClass 'answered'
+			$('#sound-reveal')[0].play()
 		else
 			@$el.removeClass 'answered'
 
