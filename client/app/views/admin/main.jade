@@ -8,8 +8,12 @@ audio#sound-wrong(preload='auto')
 	source(type="audio/ogg", src="/sounds/wrong.ogg", loop=true)
 .container-fluid.admin
 	.row
+		.col-md-5.col-md-offset-1
+			a#play-intro.btn.btn-block.btn-success(href='#') Play Intro
+		.col-md-5
+			a#play-fail.btn.btn-block.btn-danger(href='#') Play Fail
+	.row
 		.col-md-10.col-md-offset-1
-			a#play-intro.btn.btn-block.btn-danger(href='#') Play Intro
 			button#new-game.btn.btn-block.btn-primary Create New Game (kills the old one)
 	hr
 	if !locals.game

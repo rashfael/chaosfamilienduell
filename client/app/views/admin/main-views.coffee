@@ -16,6 +16,7 @@ module.exports.AdminMainView = class AdminMainView extends View
 		'click #new-round': 'requestNewRound'
 		'click #face-off': 'requestFaceOff'
 		'click #play-intro': 'startIntro'
+		'click #play-fail': 'playFail'
 
 	listen:
 		'change:round model': 'displayNewRound'
@@ -45,7 +46,7 @@ module.exports.AdminMainView = class AdminMainView extends View
 		if strikes is 0
 			@$('.strike').removeClass 'on'
 			return
-		$('#sound-wrong')[0].play()
+		# $('#sound-wrong')[0].play()
 		for i in [1..strikes]
 			@$(".strike:nth-child(#{i})").addClass 'on'
 		if strikes < 3
@@ -61,6 +62,10 @@ module.exports.AdminMainView = class AdminMainView extends View
 	startIntro: (event) =>
 		event.preventDefault()
 		@$('#sound-intro')[0].play()
+
+	playFail: (event) =>
+		event.preventDefault()
+		@$('#sound-wrong')[0].play()
 
 	stopIntro: () =>
 		@$('#sound-intro')[0].pause()
@@ -182,6 +187,7 @@ module.exports.AnswersView = class AnswersView extends CollectionView
 
 	wrongAnswer: (event) =>
 		event.preventDefault()
+		$('#sound-wrong')[0].play()
 		@publishEvent 'select-answer', new Answer
 			answer: '_wrong'
 			numberOfPeople: 0
