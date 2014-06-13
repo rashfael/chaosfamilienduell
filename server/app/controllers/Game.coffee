@@ -60,6 +60,7 @@ module.exports = class GameController
 
 			mediator.on '!game:new', (cb) =>
 				log.info 'attempting to create new game'
+				@savegamename = 'savegame-' + Date.now() + '.json'
 				teams = [
 						name: ''
 					,
