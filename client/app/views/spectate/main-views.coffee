@@ -8,6 +8,7 @@ module.exports.MainView = class AdminMainView extends View
 	container: 'body'
 	template: require 'views/spectate/main'
 	id: 'spectate'
+	className: 'phase-splash'
 	regions:
 		game: '#game'
 		team1: '#team-one'
@@ -39,7 +40,7 @@ module.exports.MainView = class AdminMainView extends View
 
 	phaseChanged: (state, phase) =>
 		# unset ALL
-		@$el.removeClass 'phase-face-off phase-team phase-new-round phase-team-steal phase-round-won'
+		@$el.removeClass 'phase-splash phase-face-off phase-team phase-new-round phase-team-steal phase-round-won'
 		@$el.addClass 'phase-' + phase
 		# if phase is 'round-won'
 		# 	@$('')

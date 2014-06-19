@@ -6,7 +6,12 @@ audio#sound-reveal(preload='auto')
 	source(type="audio/ogg", src="/sounds/reveal.ogg", loop=true)
 audio#sound-wrong(preload='auto')
 	source(type="audio/ogg", src="/sounds/wrong.ogg", loop=true)
+
+
 .container-fluid.admin
+	.row
+		#command-line.col-md-10.col-md-offset-1
+			input.form-control.typeahead(type='text', placeholder='command line')
 	.row
 		.col-md-5.col-md-offset-1
 			a#play-intro.btn.btn-block.btn-success(href='#') Play Intro

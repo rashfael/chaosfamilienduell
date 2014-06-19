@@ -17,11 +17,40 @@ module.exports.AdminMainView = class AdminMainView extends View
 		'click #face-off': 'requestFaceOff'
 		'click #play-intro': 'startIntro'
 		'click #play-fail': 'playFail'
+		'keypress #command-line': 'command'
 
 	listen:
 		'change:round model': 'displayNewRound'
 		'change:strikes model': 'displayStrikes'
 		'change:phase model': 'phaseChanged'
+
+
+	initialize: (options) =>
+		super
+		@commandHound = options.commandHound
+		@answerHound = options.answerHound
+
+	render: =>
+		super
+		console.log @commandHound
+		return unless @commandHound?
+		@$('#command-line .typeahead').typeahead
+			hint: true
+			highlight: true
+			minLength: 0
+		,
+			name: 'commands'
+			displayKey: 'value'
+			source: @commandHound.ttAdapter()
+		,
+			name: 'ansawers'
+			displayKey: 'value'
+			source: @answerHound.ttAdapter()
+
+	command: (event) =>
+		if event.keyCode is 13
+			@trigger 'command', $('.tt-input').typeahead 'val'
+			$('.tt-input').select()
 
 	requestNewGame: (event) =>
 		event.preventDefault()

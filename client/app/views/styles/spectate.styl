@@ -1,9 +1,9 @@
 @import 'nib'
 
-team1-color = #F12B03
-team2-color = #39B
-team1-color-highlight = #910
-team2-color-highlight = #3364BB
+team1-color = #DF6D56
+team2-color = #75A7B8
+team1-color-highlight = #F12B03
+team2-color-highlight = #04D
 
 #spectate
 	font-family 'commodore'
@@ -48,7 +48,7 @@ team2-color-highlight = #3364BB
 		position absolute
 		width 100%
 		bottom 2%
-		
+		-webkit-text-stroke 3px black
 
 		.strike
 			font-size 12em
@@ -59,7 +59,7 @@ team2-color-highlight = #3364BB
 	#question, #answers, #strikes
 		display none
 
-	&.phase-face-off, &.phase-team, &.phase-team-steal, &.phase-round-won
+	&.phase-face-off, &.phase-team, &.phase-team-steal-attempt, &.phase-team-steal-success, &.phase-team-steal-fail, &.phase-round-won
 		#question, #answers, #strikes
 			display block
 
@@ -125,6 +125,17 @@ team2-color-highlight = #3364BB
 			&.turn
 				.bg
 					background-color team2-color-highlight
+
+	&.phase-splash
+		#teams
+			.team-one
+					.bg
+						background-color team1-color-highlight
+						
+			.team-two
+					.bg
+						background-color team2-color-highlight
+						
 
 	&.phase-team, &.phase-round-won
 		#teams

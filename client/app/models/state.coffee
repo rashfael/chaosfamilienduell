@@ -10,6 +10,7 @@ module.exports = class State extends Model
 	#		face-off
 	#		team
 	#		round-won
+	phase: 'splash'
 
 	# round
 
@@ -42,8 +43,8 @@ module.exports = class State extends Model
 		otherTeam = @getOtherTeam()
 		@set 'team', otherTeam
 
-	grabPoints: =>
-		roundPoints = @get('round').get 'points'
+	grabPoints: (points) =>
+		roundPoints = points ? @get('round').get 'points'
 		team = @get 'team'
 		otherTeam = @getOtherTeam()
 		otherTeam.set('points', otherTeam.get('points') - roundPoints)
@@ -141,14 +142,11 @@ module.exports = class State extends Model
 								console.log 'team lost'
 
 					when 'team-steal-attempt'
-						success = false
-						answers.each (answer) =>
-							if answer.get('answer') is action.answer
-								success = true
-								answer.set 'answered', true
+						points = @get('round').get 'points'
+						calculateState()
 
-						if success
-							@grabPoints()
+						if actionAnswer?
+							@grabPoints points
 							@set 'phase', 'team-steal-success'
 						else
 							@set 'phase', 'team-steal-fail'

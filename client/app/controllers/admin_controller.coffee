@@ -13,12 +13,6 @@ NewGameView = require 'views/admin/new-game-view'
 
 
 module.exports = class AdminController extends Controller
-	beforeAction: ->
-		super
-		headerModel = new Header()
-		@reuse 'header', HeaderView,
-			region: 'header'
-			model: headerModel
 
 	index: ->
 		@subscribeEvent '!io:game:started-new', () =>
@@ -66,10 +60,41 @@ module.exports = class AdminController extends Controller
 						else
 							team1.unset 'turn'
 
+				# autocomplete
+				commands = [
+					'new round'
+					'face off'
+					'fail'
+					'switch team'
+				]
+
+				commandHound = new Bloodhound
+					datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value')
+					queryTokenizer: Bloodhound.tokenizers.whitespace
+					local: $.map commands, (command) -> { value: command }
+
+				answerHound = new Bloodhound
+					datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value')
+					queryTokenizer: Bloodhound.tokenizers.whitespace
+					local: []
+
+ 				commandHound.initialize()
+				answerHound.initialize()
 
 				@view = new AdminMainView
 					region: 'main'
 					model: @state
+					commandHound: commandHound
+					answerHound: answerHound
+
+				@state.on 'change:round', (state, round) =>
+					answerHound.clear()
+					answers = []
+					round.get('answers').forEach (answer) ->
+						answers.push
+							value: 'answer ' + answer.get 'answer'
+					console.log answers
+					answerHound.add answers
 
 				for team, i in ['team1', 'team2']
 					do (team, i) =>
@@ -86,6 +111,28 @@ module.exports = class AdminController extends Controller
 							@publishEvent '!io:emit', '!game:perform-action',
 								action: 'buzz'
 								team: i+1
+
+				@listenTo @view, 'command', (command) =>
+					switch command
+						when 'new round'
+							event = 'new-round'
+						when 'face off'
+							event = 'face-off'
+						when 'fail'
+							@publishEvent '!io:emit', '!game:perform-action',
+									action: 'answer'
+									answer: '_wrong'
+						when 'switch team'
+							@publishEvent 'switch-team'
+						else
+							answerMatch = command.match /answer (.*)/
+							if answerMatch
+								@publishEvent '!io:emit', '!game:perform-action',
+									action: 'answer'
+									answer: answerMatch[1]
+
+
+					@view.trigger event if event?
 
 				@listenTo @view, 'new-game', =>
 					console.log 'herp'
