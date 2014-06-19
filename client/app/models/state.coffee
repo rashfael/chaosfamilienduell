@@ -29,19 +29,24 @@ module.exports = class State extends Model
 		@game = @get 'game'
 
 
-	switchTeams: =>
+	getOtherTeam: =>
 		team1 = @game.get 'team1'
 		team2 = @game.get 'team2'
-		roundPoints = @get('round').get 'points'
 		team = @get('team')
-		team.set('points', team.get('points') - roundPoints)
-		@get('team').get('points')
 		if @get('team') is team1
-			team = team2
-			@set 'team', team2
+			return team2
 		else
-			team = team1
-			@set 'team', team1
+			return team1
+
+	switchTeams: =>
+		otherTeam = @getOtherTeam()
+		@set 'team', otherTeam
+
+	grabPoints: =>
+		roundPoints = @get('round').get 'points'
+		team = @get 'team'
+		otherTeam = @getOtherTeam()
+		otherTeam.set('points', otherTeam.get('points') - roundPoints)
 		team.set('points', team.get('points') + roundPoints)
 
 
@@ -66,11 +71,12 @@ module.exports = class State extends Model
 				@set 'phase', 'face-off'
 			when 'buzz'
 				if not @has('team') or action.force or @get('phase') is 'start'
+					console.log action.team
 					@set 'team', @game.get 'team' + action.team
 				else
 					console.log 'already buzzed'
 			when 'switch-team'
-				@set 'phase', 'team-steal'
+				@set 'phase', 'team-steal-attempt'
 				@switchTeams()
 				@set 'strikes', 0
 
@@ -93,7 +99,6 @@ module.exports = class State extends Model
 							actionAnswer = answer
 							answer.set 'answered', true
 							console.log answer.get 'numberOfPeople'
-							console.log @get 'round'
 							@get('round').set('points', @get('round').get('points') + answer.get('numberOfPeople')*@get('round').get('question').multiplier)
 							@get('team').set('points', @get('team').get('points') + answer.get('numberOfPeople')*@get('round').get('question').multiplier)
 						if answer.has 'answered'
@@ -117,6 +122,7 @@ module.exports = class State extends Model
 						else
 							console.log 'answer not good enough, switch teams'
 							@switchTeams()
+							@grabPoints()
 							# autophase the previous team
 							if highestAnswered isnt 0 and (@get('answerCount') > 1 or not actionAnswer?)
 								console.log 'previous team was better'
@@ -134,8 +140,28 @@ module.exports = class State extends Model
 							if strikes >= 3
 								console.log 'team lost'
 
-					when 'team-steal'
+					when 'team-steal-attempt'
+						success = false
+						answers.each (answer) =>
+							if answer.get('answer') is action.answer
+								success = true
+								answer.set 'answered', true
+
+						if success
+							@grabPoints()
+							@set 'phase', 'team-steal-success'
+						else
+							@set 'phase', 'team-steal-fail'
+							@set 'strikes', 3
+
+
+					when 'team-steal-success'
 						answers.each (answer) =>
 							if answer.get('answer') is action.answer
 								answer.set 'answered', true
 						
+
+					when 'team-steal-fail'
+						answers.each (answer) =>
+							if answer.get('answer') is action.answer
+								answer.set 'answered', true

@@ -32,7 +32,11 @@ module.exports = class GameController
 					question.answers.sort (a, b) -> b.numberOfPeople - a.numberOfPeople
 					if question.question in oldQuestions
 						log.info 'dropped', question.question
-					@questions[i].push question 
+					else
+						@questions[i].push question
+
+				if @questions[i].length is 0
+					log.fatal 'OUT OF QUESTIONS'
 
 
 			#TODO remove old questions?
@@ -103,6 +107,10 @@ module.exports = class GameController
 		if not answers?
 			return {question: 'not a question', answers: [], multiplier: 0}
 		[question] = @questions[answers].splice Math.floor(Math.random() * @questions[answers].length), 1
+		if not question?
+			log.fatal 'NO MORE QUESTIONS!'
+			return {question: '!!OUT OF QUESTIONS!!',  answers: [], multiplier: 0}
+
 		question.multiplier = roundTable[@game.round].multiplier
 		# if @questions.length is 0
 		# 	delete require.cache[require.resolve '../../../questions']
