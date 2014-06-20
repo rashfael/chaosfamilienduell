@@ -28,7 +28,7 @@ module.exports = class State extends Model
 	initialize: =>
 		super
 		@game = @get 'game'
-
+		@set 'roundCount', 0
 
 	getOtherTeam: =>
 		team1 = @game.get 'team1'
@@ -57,6 +57,9 @@ module.exports = class State extends Model
 		team2 = @game.get 'team2'
 		switch action.action
 			when 'new-round'
+				if @get('roundCount') >= 5
+					@set 'phase', 'end'
+					return
 				@set 'phase', 'new-round'
 				@set 'answerCount', 0
 				@set 'roundCount', @get('roundCount') + 1
@@ -70,9 +73,9 @@ module.exports = class State extends Model
 				team2.unset 'turn'
 			when 'face-off'
 				@set 'phase', 'face-off'
+				@unset 'team'
 			when 'buzz'
-				if not @has('team') or action.force or @get('phase') is 'start'
-					console.log action.team
+				if not @has('team') or action.force or @get('phase') in ['start', 'new-round']
 					@set 'team', @game.get 'team' + action.team
 				else
 					console.log 'already buzzed'
@@ -99,7 +102,7 @@ module.exports = class State extends Model
 						if answer.get('answer') is action.answer
 							actionAnswer = answer
 							answer.set 'answered', true
-							console.log answer.get 'numberOfPeople'
+							console.log @get 'team'
 							@get('round').set('points', @get('round').get('points') + answer.get('numberOfPeople')*@get('round').get('question').multiplier)
 							@get('team').set('points', @get('team').get('points') + answer.get('numberOfPeople')*@get('round').get('question').multiplier)
 						if answer.has 'answered'

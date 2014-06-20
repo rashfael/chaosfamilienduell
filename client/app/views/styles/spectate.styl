@@ -1,6 +1,6 @@
 @import 'nib'
 
-team1-color = #DF6D56
+team1-color = #8B716C
 team2-color = #75A7B8
 team1-color-highlight = #F12B03
 team2-color-highlight = #04D
@@ -126,7 +126,7 @@ team2-color-highlight = #04D
 				.bg
 					background-color team2-color-highlight
 
-	&.phase-splash
+	&.phase-splash, &.phase-end
 		#teams
 			.team-one
 					.bg
@@ -166,6 +166,25 @@ team2-color-highlight = #04D
 						-webkit-transform rotate(-160deg)
 						animation-duration 3s
 						animation-name turnStolen
+
+	&.phase-end
+		#teams
+			.info
+				bottom 35%
+			.points
+				font-size 10em
+				
+			.name
+				font-size 4em
+
+		#team-one
+			.info
+				text-align right
+				right 55%
+		#team-two
+			.info
+				text-align left
+				left 55%
 
 	// 	display none
 

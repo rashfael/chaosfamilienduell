@@ -89,6 +89,7 @@ class AnswerItemView extends View
 		@text = 'XXXXXXXXXXXXXXXXXXXXXX'
 
 	answered: (answer, answered) =>
+		return unless @$el?
 		answerText = @model.get 'answer'
 		if answered
 			@$el.addClass 'answered'
