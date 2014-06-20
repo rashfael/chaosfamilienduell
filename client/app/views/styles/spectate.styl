@@ -87,6 +87,7 @@ team2-color-highlight = #04D
 			height 100%			
 		.team-one
 			.bg
+				transition background-color 3s, transform 3s
 				position absolute
 				background-color team1-color
 				z-index 100
@@ -109,6 +110,7 @@ team2-color-highlight = #04D
 
 		.team-two
 			.bg
+				transition background-color 3s, transform 3s
 				position absolute
 				background-color team2-color
 				width 100%
@@ -136,36 +138,42 @@ team2-color-highlight = #04D
 					.bg
 						background-color team2-color-highlight
 						
-
-	&.phase-team, &.phase-round-won
+	&.phase-new-round, &.phase-face-off
 		#teams
 			.team-one
 				&.turn
 					.bg
-						-webkit-transform rotate(-20deg)
-						animation-duration 3s
-						animation-name gotTurn
-
+						transform rotate(-50deg)
 				&.noTurn
 					.bg
-						-webkit-transform rotate(-160deg)
-						animation-duration 3s
-						animation-name lostTurn
+						transform rotate(-130deg)
 
-	&.phase-team-steal
+	&.phase-team, &.phase-round-won, &.phase-team-steal-success
 		#teams
 			.team-one
 				&.turn
 					.bg
-						-webkit-transform rotate(-20deg)
-						animation-duration 3s
-						animation-name stoleTurn
+						transform rotate(-20deg)
 
 				&.noTurn
 					.bg
-						-webkit-transform rotate(-160deg)
-						animation-duration 3s
-						animation-name turnStolen
+						transform rotate(-160deg)
+
+
+	// &.phase-team-steal
+	// 	#teams
+	// 		.team-one
+	// 			&.turn
+	// 				.bg
+	// 					-webkit-transform rotate(-20deg)
+	// 					animation-duration 3s
+	// 					animation-name stoleTurn
+
+	// 			&.noTurn
+	// 				.bg
+	// 					-webkit-transform rotate(-160deg)
+	// 					animation-duration 3s
+	// 					animation-name turnStolen
 
 	&.phase-end
 		#teams
@@ -190,27 +198,3 @@ team2-color-highlight = #04D
 
 	// .team-two
 	// 	display none
-
-@keyframes gotTurn
-	from
-		-webkit-transform rotate(-90deg)
-	to
-		-webkit-transform rotate(-20deg)
-
-@keyframes lostTurn
-	from
-		-webkit-transform rotate(-90deg)
-	to
-		-webkit-transform rotate(-160deg)
-
-@keyframes stoleTurn
-	from
-		-webkit-transform rotate(-160deg)
-	to
-		-webkit-transform rotate(-20deg)
-
-@keyframes turnStolen
-	from
-		-webkit-transform rotate(-20deg)
-	to
-		-webkit-transform rotate(-160deg)

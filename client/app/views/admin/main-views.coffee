@@ -116,9 +116,8 @@ module.exports.TeamView = class TeamView extends View
 	listen:
 		'change:name model': 'nameChanged'	
 		'change:points model': 'pointsChanged'	
-
-	# listen:
-	# 	'change:turn model': 'turn'
+		'change:turn model': 'turnChanged'
+		
 
 	fakeBuzz: (event) ->
 		event.preventDefault()
@@ -134,6 +133,16 @@ module.exports.TeamView = class TeamView extends View
 	pointsChanged: (team, points) =>
 		console.log points
 		@$('.points').text points
+
+	turnChanged: (team, turn) =>
+		if turn
+			@$el.parent().addClass 'turn'
+			@$el.parent().removeClass 'noTurn'
+		else if turn?
+			@$el.parent().removeClass 'turn'
+			@$el.parent().addClass 'noTurn'
+		else
+			@$el.parent().removeClass 'turn', 'noTurn'
 
 class MemberItemView extends View
 	template: require 'views/admin/member-item'

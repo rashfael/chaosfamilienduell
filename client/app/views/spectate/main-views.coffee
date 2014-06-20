@@ -40,7 +40,7 @@ module.exports.MainView = class AdminMainView extends View
 
 	phaseChanged: (state, phase) =>
 		# unset ALL
-		@$el.removeClass 'phase-splash phase-face-off phase-team phase-new-round phase-team-steal phase-round-won'
+		@$el.removeClass 'phase-splash phase-face-off phase-team phase-new-round phase-team-steal phase-team-steal-attempt phase-team-steal-fail phase-team-steal-success phase-round-won'
 		@$el.addClass 'phase-' + phase
 		# if phase is 'round-won'
 		# 	@$('')
@@ -69,9 +69,11 @@ module.exports.TeamView = class TeamView extends View
 		if turn
 			@$el.parent().addClass 'turn'
 			@$el.parent().removeClass 'noTurn'
-		else
+		else if turn?
 			@$el.parent().removeClass 'turn'
 			@$el.parent().addClass 'noTurn'
+		else
+			@$el.parent().removeClass 'turn', 'noTurn'
 
 	pointsChanged: (team, points) =>
 		@$('.points').text points

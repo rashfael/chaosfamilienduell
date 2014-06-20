@@ -59,9 +59,9 @@ module.exports = class AdminController extends Controller
 						# flip turn flag
 						team.set 'turn', true
 						if team is team1
-							team2.unset 'turn'
+							team2.set 'turn', false
 						else
-							team1.unset 'turn'
+							team1.set 'turn', false
 					else
 						team1.unset 'turn'
 						team2.unset 'turn'

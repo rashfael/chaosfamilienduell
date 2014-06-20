@@ -10,6 +10,10 @@ module.exports = class State extends Model
 	#		face-off
 	#		team
 	#		round-won
+	#		team-steal-attempt
+	#		team-steal-fail
+	#		team-steal-success
+	#		end
 	phase: 'splash'
 
 	# round
@@ -125,6 +129,7 @@ module.exports = class State extends Model
 							@set 'phase', 'team'
 						else
 							console.log 'answer not good enough, switch teams'
+							# @set 'phase', 'face-off-steal'
 							@switchTeams()
 							@grabPoints()
 							# autophase the previous team
