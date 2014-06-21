@@ -3,7 +3,7 @@ CollectionView = require 'views/base/collection_view'
 {Question, Questions, Answer, Answers} = require 'models/question'
 
 
-module.exports.MainView = class AdminMainView extends View
+module.exports.MainView = class SpectateMainView extends View
 	autoRender: true
 	container: 'body'
 	template: require 'views/spectate/main'
@@ -19,6 +19,10 @@ module.exports.MainView = class AdminMainView extends View
 		'change:round model': 'displayNewRound'
 		'change:strikes model': 'displayStrikes'
 		'change:phase model': 'phaseChanged'
+
+	render: =>
+		super
+		$('body').addClass('spectate')
 
 	displayNewRound: (game, round) =>
 		@$('#title').hide()
@@ -62,7 +66,7 @@ module.exports.TeamView = class TeamView extends View
 		super
 
 	nameChanged: (team, name) =>
-		@$('.name').text name	
+		@$('.name').text name
 		# @$el.show()
 
 	turnChanged: (team, turn) =>

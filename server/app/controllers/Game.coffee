@@ -20,7 +20,7 @@ module.exports = class GameController
 			oldQuestions = []
 			for file in files
 				save = require('../../../answers/' + file)
-				continue unless save.actions?
+				continue unless save?.actions?
 				for action in save.actions
 					continue if not action.question
 					oldQuestions.push action.question.question

@@ -1,22 +1,24 @@
-.row#title
-	.col-md-12
-		h1 CHAOS
-			br
-			| FAMILIEN
-			br
-			| DUELL
+if !locals.game
+	#augenuberwrap
+		#augenwrap
+			img#augenkrebs(src='/img/cfd.svg')
+else
+	.row#title
+		.col-md-12
+			h1 CHAOS
+				br
+				| FAMILIEN
+				br
+				| DUELL
 
-#question
-	h1
-#answers
-#strikes
-	span.strike X
-	span.strike X
-	span.strike X
-.background
-	if !locals.game
-		h5 No running game
-	else
+	#question
+		h1
+	#answers
+	#strikes
+		span.strike X
+		span.strike X
+		span.strike X
+	.background
 		#teams
 			#team-one.team-one
 			#team-two.team-two
