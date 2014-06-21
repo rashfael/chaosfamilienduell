@@ -8,6 +8,7 @@ npm = cmd 'npm'
 brunch = cmd 'brunch'
 forever = cmd 'forever'
 nodemon = cmd 'nodemon'
+bower = cmd 'bower'
 
 assertDependencies = (globals, components, cb) ->
 	done = 0
@@ -42,10 +43,12 @@ assertDependencies = (globals, components, cb) ->
 task 'install', 'Install dependencies', ->
 	spawn npm, ['install'], {cwd: 'client', stdio: 'inherit'}
 	spawn npm, ['install'], {cwd: 'server', stdio: 'inherit'}
+	spawn bower, ['install'], {cwd: 'client', stdio: 'inherit'}
 
 task 'update', 'Update dependencies', ->
 	spawn npm, ['update'], {cwd: 'client', stdio: 'inherit'}
 	spawn npm, ['update'], {cwd: 'server', stdio: 'inherit'}
+	spawn bower, ['update'], {cwd: 'client', stdio: 'inherit'}
 
 task 'run', 'Launch application (production mode)', -> assertDependencies ['brunch'], ['client', 'server'], ->
 	process.env.NODE_ENV = 'production'
