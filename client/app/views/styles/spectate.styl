@@ -128,13 +128,23 @@ team2-color-highlight = #04D
 				.bg
 					background-color team2-color-highlight
 
-	&.phase-splash, &.phase-end
+	&.phase-splash
 		#teams
 			.team-one
 					.bg
 						background-color team1-color-highlight
 						
 			.team-two
+					.bg
+						background-color team2-color-highlight
+
+	&.phase-end
+		#teams
+			.team-one.win
+					.bg
+						background-color team1-color-highlight
+						
+			.team-two.win
 					.bg
 						background-color team2-color-highlight
 						

@@ -52,6 +52,7 @@ module.exports.TeamView = class TeamView extends View
 		'change:name model': 'nameChanged'
 		'change:turn model': 'turnChanged'
 		'change:points model': 'pointsChanged'
+		'change:win model': 'winChanged'
 
 	render: =>
 		super
@@ -74,6 +75,11 @@ module.exports.TeamView = class TeamView extends View
 			@$el.parent().addClass 'noTurn'
 		else
 			@$el.parent().removeClass 'turn noTurn'
+
+	winChanged: (team, win) =>
+		console.log 'winwin'
+		if win
+			@$el.parent().addClass 'win'
 
 	pointsChanged: (team, points) =>
 		@$('.points').text points
@@ -101,6 +107,7 @@ class AnswerItemView extends View
 			@$el.addClass 'answered'
 			char = 0
 			interval = setInterval =>
+				return unless @$el?
 				if char < answerMaxLength-1
 					if char < answerText.length
 						@$('.text').html answerText[0..char] + @text[char+1..answerMaxLength-2]

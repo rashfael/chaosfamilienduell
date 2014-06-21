@@ -64,6 +64,10 @@ module.exports = class State extends Model
 			when 'new-round'
 				if @get('roundCount') >= 5
 					@set 'phase', 'end'
+					if team1.get('points') > team2.get('points')
+						team1.set 'win', true
+					else if team2.get('points') > team1.get('points')
+						team2.set 'win', true
 					return
 				@set 'phase', 'new-round'
 				@set 'answerCount', 0
@@ -110,7 +114,6 @@ module.exports = class State extends Model
 							return if answer.get 'answered'
 							actionAnswer = answer
 							answer.set 'answered', true
-							console.log @get 'team'
 							@get('round').set('points', @get('round').get('points') + answer.get('numberOfPeople')*@get('round').get('question').multiplier)
 							@get('team').set('points', @get('team').get('points') + answer.get('numberOfPeople')*@get('round').get('question').multiplier)
 						if answer.has 'answered'
