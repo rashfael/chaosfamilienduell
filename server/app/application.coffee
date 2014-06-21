@@ -15,13 +15,7 @@ mediator = require './mediator'
 
 app = module.exports = express()
 
-# Load db stuff
 
-mongoose = require 'mongoose'
-mongoose.connect 'mongodb://localhost/chaosfamilienduell'
-global.mongoose = mongoose
-
-Project = mongoose.model 'Game', require('./schemas/Game'), 'games'
 
 
 # Server config

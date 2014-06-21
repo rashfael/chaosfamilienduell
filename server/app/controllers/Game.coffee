@@ -3,9 +3,7 @@ log4js = require 'log4js'
 log = log4js.getLogger 'game'
 
 mediator = require '../mediator'
-mongoose = require 'mongoose'
 
-Crud = require './Crud'
 
 fs = require 'fs'
 # load questions
