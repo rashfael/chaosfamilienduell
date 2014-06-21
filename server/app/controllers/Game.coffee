@@ -14,7 +14,7 @@ module.exports = class GameController
 		@state = {}
 		if process.argv.length is 3
 			log.info 'load game'
-			@game = require '../../../answers/' + process.argv[2]
+			@game = require '../../../' + process.argv[2]
 		@questions = []
 		fs.readdir __dirname + '/../../../answers/', (err,files) =>
 			oldQuestions = []
