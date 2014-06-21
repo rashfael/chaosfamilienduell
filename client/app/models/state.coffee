@@ -45,7 +45,7 @@ module.exports = class State extends Model
 
 	switchTeams: =>
 		otherTeam = @getOtherTeam()
-		
+
 		@set 'team', otherTeam
 
 	grabPoints: (points) =>
@@ -107,6 +107,7 @@ module.exports = class State extends Model
 						topNop = nop if nop > topNop
 						
 						if answer.get('answer') is action.answer
+							return if answer.get 'answered'
 							actionAnswer = answer
 							answer.set 'answered', true
 							console.log @get 'team'
