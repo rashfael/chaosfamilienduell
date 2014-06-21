@@ -21,7 +21,9 @@ module.exports = class GameController
 		fs.readdir __dirname + '/../../../answers/', (err,files) =>
 			oldQuestions = []
 			for file in files
-				for action in require('../../../answers/' + file).actions
+				save = require('../../../answers/' + file)
+				continue unless save.actions?
+				for action in save.actions
 					continue if not action.question
 					oldQuestions.push action.question.question
 			log.info oldQuestions
