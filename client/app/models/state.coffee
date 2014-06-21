@@ -45,6 +45,7 @@ module.exports = class State extends Model
 
 	switchTeams: =>
 		otherTeam = @getOtherTeam()
+		
 		@set 'team', otherTeam
 
 	grabPoints: (points) =>
@@ -78,6 +79,8 @@ module.exports = class State extends Model
 			when 'face-off'
 				@set 'phase', 'face-off'
 				@unset 'team'
+				team1.unset 'turn'
+				team2.unset 'turn'
 			when 'buzz'
 				if not @has('team') or action.force or @get('phase') in ['start', 'new-round']
 					@set 'team', @game.get 'team' + action.team
@@ -159,6 +162,7 @@ module.exports = class State extends Model
 						else
 							@set 'phase', 'team-steal-fail'
 							@set 'strikes', 3
+							@switchTeams()
 
 
 					when 'team-steal-success'

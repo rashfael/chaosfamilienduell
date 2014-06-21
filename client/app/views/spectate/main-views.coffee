@@ -59,13 +59,13 @@ module.exports.TeamView = class TeamView extends View
 
 	attach: =>
 		super
-		@$el.parent().addClass 'noTurn'
 
 	nameChanged: (team, name) =>
 		@$('.name').text name	
 		# @$el.show()
 
 	turnChanged: (team, turn) =>
+
 		if turn
 			@$el.parent().addClass 'turn'
 			@$el.parent().removeClass 'noTurn'
@@ -73,13 +73,13 @@ module.exports.TeamView = class TeamView extends View
 			@$el.parent().removeClass 'turn'
 			@$el.parent().addClass 'noTurn'
 		else
-			@$el.parent().removeClass 'turn', 'noTurn'
+			@$el.parent().removeClass 'turn noTurn'
 
 	pointsChanged: (team, points) =>
 		@$('.points').text points
 
 class AnswerItemView extends View
-
+	answerMaxLength = 27
 	template: require 'views/spectate/answer-item'
 	tagName: 'tr'
 
@@ -88,7 +88,11 @@ class AnswerItemView extends View
 
 	initialize: ->
 		super
-		@text = 'XXXXXXXXXXXXXXXXXXXXXX'
+		@text = Array(answerMaxLength).join 'X'
+
+	render: =>
+		super
+		@$('.text').html @text
 
 	answered: (answer, answered) =>
 		return unless @$el?
@@ -97,13 +101,13 @@ class AnswerItemView extends View
 			@$el.addClass 'answered'
 			char = 0
 			interval = setInterval =>
-				if char <= 21
+				if char < answerMaxLength-1
 					if char < answerText.length
-						@$('.text').html answerText[0..char] + @text[char+1..21]
+						@$('.text').html answerText[0..char] + @text[char+1..answerMaxLength-2]
 					else
 						spaces = ''
 						spaces += '&nbsp;' for i in [answerText.length..char]
-						@$('.text').html answerText + spaces + @text[char+1..21]
+						@$('.text').html answerText + spaces + @text[char+1..answerMaxLength-2]
 					char++
 				else
 					clearInterval interval
@@ -122,7 +126,7 @@ class AnswerItemView extends View
 					, 100
 					
 
-			, 75
+			, 55
 		else
 			@$el.removeClass 'answered'
 

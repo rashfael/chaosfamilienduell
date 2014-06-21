@@ -25,10 +25,16 @@ module.exports = class GameController
 					continue if not action.question
 					oldQuestions.push action.question.question
 			log.info oldQuestions
+			longestQuestion = ''
+			longestAnswer = ''
+
 			for i in [3..7]
 				@questions[i] = []
-				questions = require '../../../questions_' + i
+				questions = require '../../../questions/questions_' + i
 				for question in questions
+					longestQuestion = question.question if question.question.length > longestQuestion.length
+					for answer in question.answers
+						longestAnswer = answer.answer if answer.answer.length > longestAnswer.length
 					question.answers.sort (a, b) -> b.numberOfPeople - a.numberOfPeople
 					if question.question in oldQuestions
 						log.info 'dropped', question.question
@@ -37,6 +43,9 @@ module.exports = class GameController
 
 				if @questions[i].length is 0
 					log.fatal 'OUT OF QUESTIONS'
+
+			log.warn 'longestQuestion:', longestQuestion, longestQuestion.length
+			log.warn 'longestAnswer:', longestAnswer, longestAnswer.length
 
 
 			#TODO remove old questions?
