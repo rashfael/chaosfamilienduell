@@ -4,7 +4,11 @@ log = log4js.getLogger 'game'
 
 mediator = require '../mediator'
 
+DATADIR = process.env.DATADIR ?  (__dirname + '/../../../')
+ANSWERDIR = DATADIR + 'answers/'
+QUESTIONDIR = DATADIR + 'questions/'
 
+console.log ANSWERDIR
 fs = require 'fs'
 # load questions
 
@@ -14,12 +18,12 @@ module.exports = class GameController
 		@state = {}
 		if process.argv.length is 3
 			log.info 'load game'
-			@game = require '../../../' + process.argv[2]
+			@game = require DATADIR + process.argv[2]
 		@questions = []
-		fs.readdir __dirname + '/../../../answers/', (err,files) =>
+		fs.readdir ANSWERDIR, (err,files) =>
 			oldQuestions = []
 			for file in files
-				save = require('../../../answers/' + file)
+				save = require(ANSWERDIR + file)
 				continue unless save?.actions?
 				for action in save.actions
 					continue if not action.question
@@ -30,7 +34,7 @@ module.exports = class GameController
 
 			for i in [3..7]
 				@questions[i] = []
-				questions = require '../../../questions/questions_' + i
+				questions = require QUESTIONDIR + 'questions_' + i
 				for question in questions
 					longestQuestion = question.question if question.question.length > longestQuestion.length
 					for answer in question.answers
@@ -128,6 +132,6 @@ module.exports = class GameController
 
 	save: =>
 		savegame = JSON.stringify @game, null, 4
-		fs.writeFile __dirname + '/../../../answers/' + @savegamename, savegame, (err) ->
+		fs.writeFile ANSWERDIR + @savegamename, savegame, (err) ->
 			log.error err if err?
 			log.info 'wrote savegame'

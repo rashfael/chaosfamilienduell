@@ -43,7 +43,7 @@ assertDependencies = (globals, components, cb) ->
 task 'install', 'Install dependencies', ->
 	spawn npm, ['install'], {cwd: 'client', stdio: 'inherit'}
 	spawn npm, ['install'], {cwd: 'server', stdio: 'inherit'}
-	spawn bower, ['install'], {cwd: 'client', stdio: 'inherit'}
+	spawn bower, ['install', '--allow-root'], {cwd: 'client', stdio: 'inherit'}
 
 task 'update', 'Update dependencies', ->
 	spawn npm, ['update'], {cwd: 'client', stdio: 'inherit'}
