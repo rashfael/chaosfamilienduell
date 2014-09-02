@@ -5,10 +5,9 @@ log = log4js.getLogger 'game'
 mediator = require '../mediator'
 
 DATADIR = process.env.DATADIR ?  (__dirname + '/../../../')
-ANSWERDIR = DATADIR + 'answers/'
+ANSWERDIR = DATADIR + 'savegames/'
 QUESTIONDIR = DATADIR + 'questions/'
 
-console.log ANSWERDIR
 fs = require 'fs'
 # load questions
 
@@ -18,7 +17,9 @@ module.exports = class GameController
 		@state = {}
 		if process.argv.length is 3
 			log.info 'load game'
-			@game = require DATADIR + process.argv[2]
+			@game = require ANSWERDIR + process.argv[2]
+			log.info 'loaded game with:', @game.teams
+			log.info 'actionlog length:', @game.actions.length
 		@questions = []
 		fs.readdir ANSWERDIR, (err,files) =>
 			oldQuestions = []

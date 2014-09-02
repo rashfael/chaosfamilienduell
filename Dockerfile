@@ -11,5 +11,4 @@ VOLUME ["/data"]
 ENV DATADIR /data/
 
 EXPOSE 9000
-
-ENTRYPOINT cake run
+CMD cake run

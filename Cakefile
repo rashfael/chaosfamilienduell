@@ -50,10 +50,14 @@ task 'update', 'Update dependencies', ->
 	spawn npm, ['update'], {cwd: 'server', stdio: 'inherit'}
 	spawn bower, ['update'], {cwd: 'client', stdio: 'inherit'}
 
-task 'run', 'Launch application (production mode)', -> assertDependencies ['brunch'], ['client', 'server'], ->
+option '-s', '--savegame [SAVEGAME]', 'savegame file'
+
+task 'run', 'Launch application (production mode)', (options) ->
 	process.env.NODE_ENV = 'production'
 	client = spawn brunch, ['build', '--env', 'production'], {cwd: 'client', stdio: 'inherit'}
-	server = spawn forever, '--minUptime 5000 --spinSleepTime 10000 -c node bin/server.js'.split(' '), {cwd: 'server', stdio: 'inherit'}
+	args = ['--minUptime', '5000', '--spinSleepTime', '10000', '-c', 'node', 'bin/server.js']
+	args.push options.savegame if options.savegame
+	server = spawn forever, args, {cwd: 'server', stdio: 'inherit'}
 
 task 'watch', 'Launch application (development mode)', -> assertDependencies ['brunch', 'nodemon'], ['client', 'server'], ->
 	client = spawn brunch, ['watch'], {cwd: 'client', stdio: [process.stdin, 'pipe', process.stderr] }
