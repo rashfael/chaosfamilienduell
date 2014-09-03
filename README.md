@@ -56,10 +56,10 @@ You'll need a data directory where the questions and savegames are persisted wit
 
 	- savegames/ (folder has to exist)
 
-docker run -v /your/data/dir:/data -t -i $IMAGE
+```docker run -v /your/data/dir:/data -t -i $IMAGE```
 
 If you want to load an old savegame:
 
-docker run -v /your/data/dir:/data -t -i $IMAGE cake -s $SAVEGAME run
+```docker run -v /your/data/dir:/data -t -i $IMAGE cake -s $SAVEGAME run```
 
 ($SAVEGAME from savegames/)
