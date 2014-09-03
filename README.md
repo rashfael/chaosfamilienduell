@@ -46,15 +46,15 @@ To run the docker container, donwload the image, and use:
 
 You'll need a data directory where the questions and savegames are persisted with the following layout:
 
-/your/data/dir
-	questions/
-		questions_3.json
-		questions_4.json
-		questions_5.json
-		questions_6.json
-		questions_7.json
+- /your/data/dir
+	- questions/
+		- questions_3.json
+		- questions_4.json
+		- questions_5.json
+		- questions_6.json
+		- questions_7.json
 
-	savegames/ (folder has to exist)
+	- savegames/ (folder has to exist)
 
 docker run -v /your/data/dir:/data -t -i $IMAGE
 
