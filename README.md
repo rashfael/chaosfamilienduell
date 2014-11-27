@@ -7,7 +7,7 @@ node.js brunch mongodb chaplin socket.io bootstrap jquery backbone lodash
 ## Install
 
 * Install nodejs and mongodb
-* `(sudo) npm -g install coffee-script brunch bower`
+* `(sudo) npm -g install coffee-script brunch bower nodemon`
 * `cake install`
 * ``
 
